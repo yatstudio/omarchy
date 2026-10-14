@@ -1,4 +1,6 @@
 import QtQuick
+import Quickshell
+import "../i18n/zh_CN.js" as ZhCN
 import qs.Commons
 
 Item {
@@ -6,8 +8,11 @@ Item {
 
   property bool opened: false
   property string message: ""
-  property string cancelText: "Cancel"
-  property string confirmText: "Confirm"
+  // Simplified Chinese only: zh_TW / zh_HK / zh_MO / zh_Hant are Traditional
+  // and intentionally stay on the English UI until a zh_TW pack exists.
+  readonly property bool chineseUi: ZhCN.isSimplified(Quickshell.env("OMARCHY_UI_LANGUAGE") || Quickshell.env("LANGUAGE") || Quickshell.env("LANG") || "")
+  property string cancelText: chineseUi ? ZhCN.translate("Cancel") : "Cancel"
+  property string confirmText: chineseUi ? ZhCN.translate("Confirm") : "Confirm"
   property int selectedIndex: 1
   property color background: Color.background
   property color foreground: Color.foreground
